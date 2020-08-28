@@ -1,0 +1,123 @@
+{
+  "name": "fund-test",
+  "displayName": "fund-test",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.48.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:fund-test.helloWorld",
+    "onView:fund-list"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "fund",
+          "title": "fund",
+          "icon": "images/fund.svg"
+        }
+      ]
+    },
+    "views": {
+      "fund": [
+        {
+          "name": "自选基金",
+          "id": "fund-list"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "fund",
+      "type": "object",
+      "properties": {
+        "fund.favorites": {
+          "type": "array",
+          "default": [
+            "163407",
+            "161017"
+          ],
+          "description": "自选基金列表，值为基金代码"
+        },
+        "fund.interval": {
+          "type": "number",
+          "default": 2,
+          "description": "刷新时间，单位为秒，默认2s"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "fund-test.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "fund.add",
+        "title": "新增",
+        "icon": {
+          "light": "images/light-add.svg",
+          "dark": "images/dark-add.svg"
+        }
+      },
+      {
+        "command": "fund.refresh",
+        "title": "刷新",
+        "icon": {
+          "light": "images/light-refresh.svg",
+          "dark": "images/dark-refresh.svg"
+        }
+      },
+      {
+        "command": "fund.item.remove",
+        "title": "删除"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "when": "view == fund-list",
+          "command": "fund.add",
+          "group": "navgation"
+        },
+        {
+          "when": "view == fund-list",
+          "group": "navigation",
+          "command": "fund.refresh"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "fund.item.remove",
+          "when": "view == fund-list",
+          "group": "inline"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.48.0",
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.0.0",
+    "@types/node": "^14.0.27",
+    "eslint": "^7.6.0",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
+    "glob": "^7.1.6",
+    "mocha": "^8.0.1",
+    "typescript": "^3.8.3",
+    "vscode-test": "^1.4.0"
+  }
+}
